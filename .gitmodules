@@ -1,0 +1,3 @@
+[submodule "om-dvr"]
+	path = om-dvr
+	url = git@github.com:dreglad/om-dvr.git
