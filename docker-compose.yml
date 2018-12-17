@@ -24,14 +24,15 @@ services:
     image: valian/docker-nginx-auto-ssl
     restart: on-failure
     environment:
-      ALLOWED_DOMAINS: '*.tlsur.net, *.openmultimedia.biz, *.omedia.io'
-      SITES: 'admin.tlsur.net=admin-legacy:8043; live2vod.openmultimedia.biz=live2vod:8043; dvr-backend.omedia.io=docker-highcpu.openmultimedia.biz:4010'
+      ALLOWED_DOMAINS: '.*'
+      SITES: 'admin.tlsur.net=admin-legacy:8043;dvr-backend.omedia.io=docker-highcpu.openmultimedia.biz:4010'
       FORCE_HTTPS: 'false'
     ports:
       - 80:80
       - 443:443
     volumes:
       - ssl_data:/etc/resty-auto-ssl
+      - ./live2vod.conf:/etc/nginx/conf.d/live2vod.conf
       - ./server-proxy.conf:/usr/local/openresty/nginx/conf/server-proxy.conf
     depends_on:
       - admin-legacy
