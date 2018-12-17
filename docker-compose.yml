@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  # Kaltura
+  kaltura:
+    build:
+      context: ./kaltura
+    volumes:
+      - media:/srv/media
+      - static:/srv/static
+    ports:
+      - "8080"
+    # links:
+    #   - djang@o
+
+  edge:
+    image: nginx
+    ports:
+     - "8080:80"
+    environment:
+     - NGINX_HOST=foobar.com
+     - NGINX_PORT=80
+    volumes:
+     - ./nginx.template:/etc/nginx/nginx.template
+    command: /bin/bash -c "envsubst < /etc/nginx/nginx.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
