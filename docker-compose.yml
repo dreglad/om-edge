@@ -4,8 +4,10 @@ services:
 
   live2vod:
     image: pierrezemb/gostatic
+    ports:
+      - 8043:8043
     volumes:
-      - ./om-dvr/build:/srv/http
+      - ./om-dvr/dist:/srv/http
     entrypoint: "/goStatic --fallback /index.html"
 
   admin-legacy:
@@ -19,11 +21,11 @@ services:
   #     - 80
 
   nginx:
-    image: valian/docker-nginx-auto-ssl
+    image:pierrezemb/gostatic
     restart: on-failure
     environment:
-      ALLOWED_DOMAINS: 'live2vod.openmultimedia.biz,admin.tlsur.net'
-      SITES: 'live2vod.openmultimedia.biz=live2vod:80; admin.tlsur.net=admin-legacy:8043; _=admin-legacy:8043'
+      ALLOWED_DOMAINS: '*.tlsur.net, *.openmultimedia.biz, *.omedia.io'
+      SITES: 'admin.tlsur.net=admin-legacy:8043; live2vod.openmultimedia.biz=live2vod:8043; dvr-backend.omedia.io:docker-highcpu.openmultimedia.biz:4010'
       FORCE_HTTPS: 'false'
     ports:
       - 80:80
