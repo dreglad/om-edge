@@ -21,7 +21,7 @@ services:
   #     - 80
 
   nginx:
-    image:pierrezemb/gostatic
+    image: valian/docker-nginx-auto-ssl
     restart: on-failure
     environment:
       ALLOWED_DOMAINS: '*.tlsur.net, *.openmultimedia.biz, *.omedia.io'
