@@ -1,25 +1,38 @@
 version: '3'
 
 services:
-  # Kaltura
-  kaltura:
-    build:
-      context: ./kaltura
-    volumes:
-      - media:/srv/media
-      - static:/srv/static
-    ports:
-      - "8080"
-    # links:
-    #   - djang@o
 
-  edge:
-    image: nginx
-    ports:
-     - "8080:80"
-    environment:
-     - NGINX_HOST=foobar.com
-     - NGINX_PORT=80
+  live2vod:
+    image: pierrezemb/gostatic
     volumes:
-     - ./nginx.template:/etc/nginx/nginx.template
-    command: /bin/bash -c "envsubst < /etc/nginx/nginx.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+      - ./om-dvr/build:/srv/http
+    entrypoint: "/goStatic --fallback /index.html"
+
+  admin-legacy:
+    image: pierrezemb/gostatic
+    volumes:
+      - ./telesur-admin-legacy:/srv/http
+
+  # kaltura:
+  #   build: ./kaltura
+  #   ports:
+  #     - 80
+
+  nginx:
+    image: valian/docker-nginx-auto-ssl
+    restart: on-failure
+    environment:
+      ALLOWED_DOMAINS: 'live2vod.openmultimedia.biz,admin.tlsur.net'
+      SITES: 'live2vod.openmultimedia.biz=live2vod:80; admin.tlsur.net=admin-legacy:8043; _=admin-legacy:8043'
+      FORCE_HTTPS: 'false'
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ssl_data:/etc/resty-auto-ssl
+    depends_on:
+      - admin-legacy
+      - live2vod
+
+volumes:
+  ssl_data:
