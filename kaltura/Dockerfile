@@ -9,8 +9,7 @@ RUN \
   apt-get -y install kaltura-nginx
 
 WORKDIR /opt/kaltura/nginx
-ADD nginx.conf ./conf
-ADD vod.conf ./conf
+COPY nginx.conf ./conf
 
 RUN \
   ln -sf /dev/stdout /opt/kaltura/nginx/logs/access.log && \
@@ -18,7 +17,7 @@ RUN \
 
 STOPSIGNAL SIGTERM
 
-EXPOSE 4010
+EXPOSE 1945
 
 # # reset image's default entrypoint (ffmpeg)
 ENTRYPOINT []
