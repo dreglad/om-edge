@@ -22,7 +22,6 @@ services:
       - admin-legacy
       - live2vod
       - thumbor
-      # - kaltura
 
   live2vod:
     image: pierrezemb/gostatic
@@ -36,11 +35,6 @@ services:
     image: pierrezemb/gostatic
     volumes:
       - ./telesur-admin-legacy:/srv/http
-
-  kaltura:
-    build: ./kaltura
-    ports:
-      - 1945
 
   thumbor:
     image: apsl/thumbor
