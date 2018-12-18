@@ -2,16 +2,28 @@
 
 Edge server for Open Multimedia HTTP services
 
-## Run
+## Usage
 
 1. Set environment variables to configure services (see Docker Compose file for reference)
 2. Run services:
 
   ```sh
-  $ docker-compose up -d
+  $ make run
   ```
 
-## Sites
+* Restart edge server
+
+ ```sh
+  $ make run
+  ```
+
+* Watch edge server logs
+
+ ```sh
+  $ make run
+  ```
+
+## Services
 
   * admin-legacy
   * live2vod
