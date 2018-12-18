@@ -2,6 +2,28 @@ version: '3'
 
 services:
 
+  # Front proxy
+  nginx:
+    image: valian/docker-nginx-auto-ssl
+    restart: on-failure
+    environment:
+      ALLOWED_DOMAINS: '.*'
+      FORCE_HTTPS: 'false'
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ssl_data:/etc/resty-auto-ssl
+      - storage:/srv/storage
+      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./index.html:/srv/storage/index.html
+    depends_on:
+      - admin-legacy
+      - live2vod
+      - thumbor
+      # - kaltura
+
   live2vod:
     image: pierrezemb/gostatic
     ports:
@@ -15,34 +37,15 @@ services:
     volumes:
       - ./telesur-admin-legacy:/srv/http
 
-  # kaltura:
-  #   build: ./kaltura
-  #   ports:
-  #     - 80
+  kaltura:
+    build: ./kaltura
+    ports:
+      - 1945
 
   thumbor:
     image: apsl/thumbor
     ports:
       - 8000
-
-  nginx:
-    image: valian/docker-nginx-auto-ssl
-    restart: on-failure
-    environment:
-      ALLOWED_DOMAINS: '.*'
-      FORCE_HTTPS: 'false'
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ssl_data:/etc/resty-auto-ssl
-      - storage:/srv/storage
-      - ./conf.d:/etc/nginx/conf.d
-      - ./index.html:/srv/storage/index.html
-    depends_on:
-      - admin-legacy
-      - live2vod
-      - thumbor
 
 volumes:
   ssl_data:
