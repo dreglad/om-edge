@@ -20,6 +20,11 @@ services:
   #   ports:
   #     - 80
 
+  thumbor:
+    image: apsl/thumbor
+    ports:
+      - 8000
+
   nginx:
     image: valian/docker-nginx-auto-ssl
     restart: on-failure
@@ -32,12 +37,12 @@ services:
     volumes:
       - ssl_data:/etc/resty-auto-ssl
       - storage:/srv/storage
-      - ./conf.d/admin-legacy.conf:/etc/nginx/conf.d/admin-legacy.conf
-      - ./conf.d/live2vod.conf:/etc/nginx/conf.d/live2vod.conf
-      - ./conf.d/storage.conf:/etc/nginx/conf.d/storage.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./index.html:/srv/storage/index.html
     depends_on:
       - admin-legacy
       - live2vod
+      - thumbor
 
 volumes:
   ssl_data:
