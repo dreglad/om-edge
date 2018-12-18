@@ -25,18 +25,20 @@ services:
     restart: on-failure
     environment:
       ALLOWED_DOMAINS: '.*'
-      SITES: 'admin.tlsur.net=admin-legacy:8043;dvr-backend.omedia.io=docker-highcpu.openmultimedia.biz:4010'
       FORCE_HTTPS: 'false'
     ports:
       - 80:80
       - 443:443
     volumes:
       - ssl_data:/etc/resty-auto-ssl
-      - ./live2vod.conf:/etc/nginx/conf.d/live2vod.conf
-      - ./server-proxy.conf:/usr/local/openresty/nginx/conf/server-proxy.conf
+      - storage:/srv/storage
+      - ./conf.d/admin-legacy.conf:/etc/nginx/conf.d/admin-legacy.conf
+      - ./conf.d/live2vod.conf:/etc/nginx/conf.d/live2vod.conf
+      - ./conf.d/storage.conf:/etc/nginx/conf.d/storage.conf
     depends_on:
       - admin-legacy
       - live2vod
 
 volumes:
   ssl_data:
+  storage:
