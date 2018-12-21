@@ -14,13 +14,13 @@ Edge server for Open Multimedia HTTP services
 * Restart edge server
 
  ```sh
-  $ make run
+  $ make restart
   ```
 
 * Watch edge server logs
 
  ```sh
-  $ make run
+  $ make logs
   ```
 
 ## Services
