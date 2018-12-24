@@ -18,6 +18,7 @@ services:
       - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - ./conf.d:/etc/nginx/conf.d
       - ./index.html:/srv/storage/index.html
+      - ./robots.txt:/srv/storage/robots.txt
     depends_on:
       - admin-legacy
       - live2vod
