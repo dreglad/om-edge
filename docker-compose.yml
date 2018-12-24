@@ -23,6 +23,7 @@ services:
       - admin-legacy
       - live2vod
       - thumbor
+      - video
 
   video:
     image: fsouza/video-nginx
