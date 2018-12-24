@@ -23,6 +23,13 @@ services:
       - live2vod
       - thumbor
 
+  video:
+    image: fsouza/video-nginx
+    ports:
+      - 8081:8081
+    volumes:
+      - ./video/nginx.conf:/usr/local/nginx/conf/nginx.conf
+
   live2vod:
     image: pierrezemb/gostatic
     ports:
