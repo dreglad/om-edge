@@ -16,6 +16,7 @@ services:
       - ssl_data:/etc/resty-auto-ssl
       - storage:/srv/storage
       - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./includes:/usr/local/openresty/nginx/conf/includes
       - ./conf.d:/etc/nginx/conf.d
       - ./index.html:/srv/storage/index.html
       - ./robots.txt:/srv/storage/robots.txt
