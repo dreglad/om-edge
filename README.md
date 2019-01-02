@@ -27,5 +27,7 @@ Edge server for Open Multimedia HTTP services
 
   * admin-legacy
   * live2vod
-  * images
-  * storage
+  * images (image manipulation based on thumbor)
+  * media (media files proxy)
+  * live (public live streaming)
+  * get (generic proxy)
