@@ -51,6 +51,15 @@ services:
     ports:
       - 8000
 
+  purge-clip-storage:
+    image: python:latest
+    environment:
+      - LOGLEVEL=DEBUG
+    volumes:
+      - storage:/srv/storage
+      - ./src/purge-clip-storage.py:/purge-clip-storage.py
+    command: ["python", "/purge-clip-storage.py", "/srv/storage/clips", "5", "97", "90"]
+
 volumes:
   ssl_data:
   storage:
